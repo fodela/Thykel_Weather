@@ -15,58 +15,63 @@ ScreenManager:
             title: 'Weather'
         #Search
         MDTextField:
-            id: search
+            id: searched_city
             hint_text: 'Search City'
             pos_hint: {'top':.87}
             required: True
             helper_text: "Press enter to get the weather of the city"
             helper_text_mode: 'on_focus'
+            multiline: False
+            on_text_validate: root.search('on_release',40)
+            
         #Labels
         Label:
             text:'Today'
             font_size: 30
             pos_hint: {'top':1.2,'center_x':.5}
         Label:
-            text:'Mon, 16 Nov'
+            text:str(root.Today)
             pos_hint: {'center_x':.5,'top': 1.155}
         Label:
-            text:'Partially cloudy'
-            pos_hint: {'top':1.1,'center_x':.31}
+            text:str(root.weather_text)
+            pos_hint: {'top':1.1,'center_x':.40}
         Label:
-            text:'28'
+            text:str(root.temp_c)
             font_size:100
             pos_hint: {'center_x':.5,'top':1}
         Label:
-            text:'Accra, Ghana'
+            text:str(root.city_name)+', '+str(root.country_name)
             pos_hint: {'center_x':.5,'top':.90}
         Label:
-            text:'Feels like 32,  Sunset 20:15'
+            text:'Feels like '+str(root.feels_like)+ ' . '+'Sunset '+ str(root.sunset)
             pos_hint: {'center_x':.5,'top':.80}
             #Wind
         Label:
             text:'Wind:'
             pos_hint: {'center_x':.2,'top':.70}
         Label:
-            text:'9.4 mph'
+            text:str(root.wind)+ ' mph'
             pos_hint: {'center_x':.2,'top':.65}
             #Humidity
         Label:
             text:'Humidity:'
             pos_hint: {'center_x':.5,'top':.70}
         Label:
-            text:'80%'
+            text:str(root.humidity)+'%'
             pos_hint: {'center_x':.5,'top':.65}
             #Pressure
         Label:
             text:'Pressure:'
             pos_hint: {'center_x':.8,'top':.70}
         Label:
-            text:'30.2 in'
+            text:str(root.pressure)+' in'
             pos_hint: {'center_x':.8,'top':.65}
         #Image
-        Image:
-            source: 'images/rain.png'
-            pos_hint: {'top':1.175,'center_x':.31}
+        
+        AsyncImage:
+            source: str(root.img_url)
+            pos_hint: {'top':1.179,'center_x':.30}
         Image:
             source: 'images/celsius.png'
             pos_hint: {'center_x':.7,'top':1.05 }
+        
