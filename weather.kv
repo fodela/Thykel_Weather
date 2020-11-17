@@ -1,0 +1,60 @@
+ScreenManager:
+    HomeScreen:
+        id: home
+        name: 'home'
+<HomeScreen>:
+    canvas:
+        Color:
+            rgb: (5/255, 2/255, 33/255)
+        Rectangle:
+            pos: 0,-130
+            size: self.size
+    FloatLayout:
+        MDToolbar:
+            pos_hint: {'top':1}
+            title: 'Weather'
+        #Search
+        MDTextField:
+            id: search
+            hint_text: 'Search City'
+            pos_hint: {'top':.87}
+            required: True
+            helper_text: "Press enter to get the weather of the city"
+            helper_text_mode: 'on_focus'
+        #Labels
+        Label:
+            text:'Today'
+            font_size: 30
+            pos_hint: {'top':1.2,'center_x':.5}
+        Label:
+            text:'Mon, 16 Nov'
+            pos_hint: {'center_x':.5,'top': 1.155}
+        Label:
+            text:'Partially cloudy'
+            pos_hint: {'top':1.1,'center_x':.31}
+        Label:
+            text:'28'
+            font_size:100
+            pos_hint: {'center_x':.5,'top':1}
+        Label:
+            text:'Accra, Ghana'
+            pos_hint: {'center_x':.5,'top':.90}
+        Label:
+            text:'Feels like 32,  Sunset 20:15'
+            pos_hint: {'center_x':.5,'top':.80}
+        # Label:
+        #     text:'Feels like 32,  Sunset 20:15'
+        #     pos_hint: {'center_x':.5,'top':.80}
+        # Label:
+        #     text:'Feels like 32,  Sunset 20:15'
+        #     pos_hint: {'center_x':.5,'top':.80}
+        # Label:
+        #     text:'Feels like 32,  Sunset 20:15'
+        #     pos_hint: {'center_x':.5,'top':.80}
+        #Image
+        Image:
+            source: 'images/rain.png'
+            pos_hint: {'top':1.175,'center_x':.31}
+        Image:
+            source: 'images/celsius.png'
+            pos_hint: {'center_x':.7,'top':1.05 }
