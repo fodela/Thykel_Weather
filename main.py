@@ -1,7 +1,9 @@
 from kivymd.app import MDApp
+from kivy.config import Config
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.core.window import Window
-from kivy.lang import Builder
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDFlatButton,MDRaisedButton
 from kivy.properties import StringProperty, ObjectProperty
 from datetime import date
 import requests, json
@@ -13,14 +15,32 @@ class Index(Screen):
 class Weather(Screen):
     pass
     
+class LocationGetter(Screen):
+    pass
 
 
 
 class WeatherApp(MDApp):
+    city_name = StringProperty()
+    country_name = StringProperty()
+    temp_c = StringProperty()
+    weather_text = StringProperty()
+    is_day = StringProperty()
+    img_url = StringProperty()
+    humidity = StringProperty()
+    wind = StringProperty()
+    pressure = StringProperty()
+    feels_like = StringProperty()
+    uv = StringProperty()
+    Today = StringProperty()
+    today = date.today()
+
     def __init__(self,*args, **kwargs):
         super().__init__()
         Window.size = (350,600)
         self.location = ''
+        self.icon = '/home/fodela/Project/Python Projects/Kivy Projects/Thykel_Weather/images/weather_icon.png'
+        self.ask_current_location_dialog = None
 
     def build(self):
         self.sm = ScreenManager()
@@ -36,24 +56,35 @@ class WeatherApp(MDApp):
         self.sm.add_widget(screen)
 
         return self.sm
+    
+    def on_start(self):
+        self.ask_current_location()
+
+    def ask_current_location(self):
+        
+        if not self.ask_current_location_dialog: 
+            
+            self.ask_current_location_dialog = MDDialog(
+                                            title = 'Add Current Location:',
+                                            type = 'custom',
+                                            content_cls=LocationGetter(),
+                                            size_hint = (.8,.3),
+                                            buttons=[
+                                                MDFlatButton(
+                                                    text = 'Cancel',
+                                                    # on_press = lambda x: self.cancel()
+                                                ),
+                                                MDRaisedButton(
+                                                    text = 'Add',
+                                                     on_press= lambda a:self.add_location()
+                                                )
+                                            ]
+                                            )
+        self.ask_current_location_dialog.open()
         
     def change_screen(self,screen_name):
         self.sm.current = screen_name
         
-        
-    city_name = StringProperty()
-    country_name = StringProperty()
-    temp_c = StringProperty()
-    weather_text = StringProperty()
-    is_day = StringProperty()
-    img_url = StringProperty()
-    humidity = StringProperty()
-    wind = StringProperty()
-    pressure = StringProperty()
-    feels_like = StringProperty()
-    uv = StringProperty()
-    Today = StringProperty()
-    today = date.today()
     def search(self,instance,keycode):
         if self.sm.current == 'index':
             location = self.index_page.ids.searched_city.text
@@ -81,6 +112,11 @@ class WeatherApp(MDApp):
             self.change_screen('weather')
         except Exception as e:
             print(e)
+
+    def add_location(self):
+        c = LocationGetter().ids.current_city.text
+        # C = 
+        print(c)
 
 if __name__ == "__main__":
     WeatherApp().run()

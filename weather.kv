@@ -106,3 +106,16 @@ ScreenManager:
             source: 'images/celsius.png'
             pos_hint: {'center_x':.7,'top':1.05 }
          
+
+<LocationGetter>:
+    MDTextField:
+        id: current_city
+        hint_text: 'Enter City'
+        pos_hint: {'top':1.1}
+        required: True
+        multiline: False
+    MDTextField:
+        id: current_country
+        hint_text: 'Enter Country'
+        required: True
+        multiline: False
