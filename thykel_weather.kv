@@ -1,49 +1,21 @@
-ScreenManager:
-    id: sm
-    Index:
-        id: index
-        name: 'index'
-    Weather:
-        id: weather
-        name: 'weather'
-<Index>:
-         
-            
-    FloatLayout:
-        canvas.before:     
-            Rectangle:
-                pos: 0,-120
-                size: self.size
-                source:'images/index_pic.jpg'  
-        MDToolbar:
-            pos_hint: {'top':1}
-            title: 'Welcome to Thykel weather App'
-            title_anchor: 'center'
-            # specific_text_color: 7/255,2/255,41/255,1
-            md_bg_color:  7/255,2/255,41/255,1
-        #Search
-        MDTextField:
-            id: searched_city
-            hint_text: 'Search City'
-            pos_hint: {'top':.89}
-            required: True
-            helper_text: "Press enter to get the weather of the city"
-            helper_text_mode: 'on_focus'
-            multiline: False
-            on_text_validate: app.search('on_release',40)
-
-<Weather>
+# ScreenManager:
+#     id: sm
+#     # Index:
+#     #     id: index
+#     #     name: 'index'
+Screen:
     canvas.before:     
         Rectangle:
             pos: 0,-130
             size: self.size
-            source:'images/bgpic.jpg'       
+            source: app.background_pic 
             
     FloatLayout:
         MDToolbar:
             pos_hint: {'top':1}
             title: 'Weather'
             md_bg_color:  7/255,2/255,41/255,1
+            right_action_items: [['map-marker-radius-outline',lambda x:app.ask_current_location()]]
         #Search
         MDTextField:
             id: searched_city
@@ -54,6 +26,11 @@ ScreenManager:
             helper_text_mode: 'on_focus'
             multiline: False
             on_text_validate: app.search('on_release',40)
+
+        MDIconButton:
+            icon: 'magnify'
+            pos_hint: {'top':.87,'right':1}
+            on_press: app.search('on_release',40)
             
         #Labels
         Label:
@@ -105,17 +82,16 @@ ScreenManager:
         Image:
             source: 'images/celsius.png'
             pos_hint: {'center_x':.7,'top':1.05 }
-         
 
 <LocationGetter>:
     MDTextField:
-        id: current_city
         hint_text: 'Enter City'
         pos_hint: {'top':1.1}
         required: True
         multiline: False
+        on_text: app.current_city =self.text
     MDTextField:
-        id: current_country
         hint_text: 'Enter Country'
         required: True
         multiline: False
+        on_text: app.current_country =self.text
